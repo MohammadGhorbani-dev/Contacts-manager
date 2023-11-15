@@ -8,6 +8,7 @@ import Typography from "@mui/joy/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Link } from "react-router-dom";
 
 export default function Contact({ contact }) {
   return (
@@ -38,9 +39,11 @@ export default function Contact({ contact }) {
       </CardContent>
       <CardOverflow sx={{ bgcolor: "background.level1" }}>
         <CardActions className="m-auto gap-9 ">
-          <IconButton color="primary">
-            <VisibilityIcon className="w-8 h-8" />
-          </IconButton>
+          <Link to={`/contacts/${contact.id}`}>
+            <IconButton>
+              <VisibilityIcon color="primary" className="w-8 h-8" />
+            </IconButton>
+          </Link>
           <IconButton color="secondary">
             <EditIcon className="w-8 h-8" />
           </IconButton>

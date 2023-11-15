@@ -4,6 +4,7 @@ import {
   getAllGroups,
   createContact,
 } from "./services/contactService";
+
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import {
   Navbar,
@@ -16,6 +17,7 @@ import {
 
 function App() {
   const [spinnerLoading, setSpinnerLoading] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [getContacts, setContacts] = useState([]);
   const [getGroups, setGroups] = useState([]);
   const [getContact, setContact] = useState({
@@ -26,10 +28,7 @@ function App() {
     job: "",
     group: "",
   });
-  
-  if(getContact){
-    console.log(getContact);
-  }
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,9 +48,25 @@ function App() {
         setSpinnerLoading(false);
       }
     };
-
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setSpinnerLoading(true);
+
+        const { data: contactsData } = await getAllContacts();
+        setContacts(contactsData);
+
+        setSpinnerLoading(false);
+      } catch (err) {
+        console.log(err.message);
+        setSpinnerLoading(false);
+      }
+    };
+    fetchData();
+  }, [update]);
 
   const createContactForm = async (event) => {
     event.preventDefault();
@@ -67,6 +82,7 @@ function App() {
           job: "",
           group: "",
         });
+        setUpdate(!update);
         navigate("/contacts");
       }
     } catch (err) {

@@ -26,7 +26,7 @@ export default function Contacts({ contacts, spinnerLoading }) {
       ) : (
         <section className="flex flex-wrap justify-center w-full h-full">
           {contacts.length > 0 ? (
-            contacts.map((c) => <Contact  contact={c} key={c.id} />)
+            contacts.map((c) => <Contact contact={c} key={c.id} />)
           ) : (
             <div>
               <p
