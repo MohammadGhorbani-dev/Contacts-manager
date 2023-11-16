@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+
 import {
   getAllContacts,
   getAllGroups,
   createContact,
+  deleteContact,
 } from "./services/contactService";
-
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Contact,
@@ -14,6 +16,9 @@ import {
   EditContact,
   ViewContact,
 } from "./components";
+
+import { Button } from "@mui/material";
+import Typography from "@mui/joy/Typography";
 
 function App() {
   const [spinnerLoading, setSpinnerLoading] = useState(false);
@@ -94,35 +99,116 @@ function App() {
     setContact({ ...getContact, [event.target.name]: event.target.value });
   };
 
+  const confirm = (contactId, contactFullname) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <Typography
+            dir="rtl"
+            style={{
+              backgroundColor: "#282a36",
+              border: "1px solid #bd93f9",
+              borderRadius: "0.7rem",
+              padding: "1rem",
+              width: "24rem",
+            }}
+          >
+            <h1
+              style={{
+                color: "white",
+                lineHeight: "2rem",
+                fontSize: " 1.5rem",
+                paddingTop: "0.01rem",
+                paddingBottom: "1rem",
+              }}
+            >
+              پاک کردن مخاطب
+            </h1>
+            <p
+              style={{
+                color: "white",
+                lineHeight: "2rem",
+                paddingTop: "0.01rem",
+                paddingBottom: "1rem",
+              }}
+            >
+              مطمئنی که میخوای مخاطب {contactFullname} رو پاک کنی ؟
+            </p>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                removeContact(contactId);
+                onClose();
+              }}
+              style={{ marginLeft: "0.75rem" }}
+            >
+              مطمئن هستم
+            </Button>
+            <Button
+              style={{ marginRight: "0.75rem" }}
+              variant="contained"
+              color="error"
+              onClick={onClose}
+            >
+              انصراف
+            </Button>
+          </Typography>
+        );
+      },
+    });
+  };
+
+  const removeContact = async (contactId) => {
+    try {
+      setSpinnerLoading(true);
+      const response = await deleteContact(contactId);
+      if (response) {
+        setSpinnerLoading(false);
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err.message);
+      setSpinnerLoading(false);
+    }
+  };
+
   return (
     <div>
       <Navbar />
-   <div className="pt-16">
-   <Routes>
-        <Route path="/" element={<Navigate to="/contacts" />} />
-        <Route
-          path="/contacts"
-          element={
-            <Contacts contacts={getContacts} spinnerLoading={spinnerLoading} />
-          }
-        />
-        <Route
-          path="/contacts/add"
-          element={
-            <AddContact
-              spinnerLoading={spinnerLoading}
-              setContactInfo={setContactInfo}
-              contact={getContact}
-              groups={getGroups}
-              createContactForm={createContactForm}
-            />
-          }
-        />
-        <Route path="/contacts/edit/:contactId" element={<EditContact />} />
-        <Route path="/contacts/:contactId" element={<ViewContact />} />
-        <Route path="/contacts/edit/:contactId" element={<Contact />} />
-      </Routes>
-   </div>
+      <div className="pt-16">
+        <Routes>
+          <Route path="/" element={<Navigate to="/contacts" />} />
+          <Route
+            path="/contacts"
+            element={
+              <Contacts
+                contacts={getContacts}
+                spinnerLoading={spinnerLoading}
+                confirmContact={confirm}
+              />
+            }
+          />
+          <Route
+            path="/contacts/add"
+            element={
+              <AddContact
+                spinnerLoading={spinnerLoading}
+                setContactInfo={setContactInfo}
+                contact={getContact}
+                groups={getGroups}
+                createContactForm={createContactForm}
+              />
+            }
+          />
+          <Route
+            path="/contacts/edit/:contactId"
+            element={<EditContact update={update} setUpdate={setUpdate} />}
+          />
+          <Route path="/contacts/:contactId" element={<ViewContact />} />
+          <Route path="/contacts/edit/:contactId" element={<Contact />} />
+        </Routes>
+      </div>
     </div>
   );
 }

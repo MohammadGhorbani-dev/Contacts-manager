@@ -74,7 +74,6 @@ export default function EditContact() {
       setState({ ...state, loading: false });
       if (data) {
         navigate("/contacts");
-        setState({});
       }
     } catch (err) {
       console.log(err.message);
@@ -129,6 +128,7 @@ export default function EditContact() {
                   variant="outlined"
                 />
                 <TextField
+                 
                   required
                   onChange={contactUpdate}
                   name="mobile"
