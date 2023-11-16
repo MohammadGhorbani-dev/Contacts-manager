@@ -63,10 +63,10 @@ export default function ViewContact() {
                     <img
                       src={contact.photo}
                       alt={contact.fullname}
-                      className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9] max-md:mr-10"
+                      className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9] "
                     />
                   </div>
-                  <div className="flex flex-col gap-5 justify-between py-1 px-10">
+                  <div className="flex flex-col gap-y-4 justify-between py-1 ">
                     <Typography>
                       نام و نام خانوادگی : {contact.fullname}
                     </Typography>

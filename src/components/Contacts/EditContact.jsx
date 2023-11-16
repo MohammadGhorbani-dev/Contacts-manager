@@ -84,8 +84,10 @@ export default function EditContact() {
   const { loading, contact, groups } = state;
   return (
     <>
-      <h3 className="text-center mt-5 text-xl font-bold ">ویرایش مخاطب</h3>
-      <div className="border-[1px] mx-9 my-5" />
+      <h3 className="text-center mt-5 text-xl font-bold max-md:mt-2">
+        ویرایش مخاطب
+      </h3>
+      <div className="border-[1px] mx-9 my-5 max-md:my-4" />
       {loading ? (
         <Spinner />
       ) : (
@@ -102,7 +104,7 @@ export default function EditContact() {
                 <img
                   src={contact.photo}
                   alt={contact.fullname}
-                  className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9] max-md:-mt-5 max-md:mb-5"
+                  className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9] max-md:w-52 max-md:h-52  max-md:-mt-5 max-md:mb-5"
                 />
               </div>
               <div className="flex flex-col gap-5 justify-between py-1 px-10 w-1/2 max-md:w-full ">
@@ -128,7 +130,6 @@ export default function EditContact() {
                   variant="outlined"
                 />
                 <TextField
-                 
                   required
                   onChange={contactUpdate}
                   name="mobile"
@@ -181,12 +182,12 @@ export default function EditContact() {
                 </FormControl>
               </div>
             </CardContent>
-            <div className="flex  justify-center">
+            <div className="flex justify-center">
               <Button
                 type="submit"
                 variant="contained"
                 color="success"
-                className="mt-10 -mb-7 max-md:mt-4 w-36 text-xl mx-4 text-green-700  hover:text-white rounded-md"
+                className="mt-10 -mb-7 max-md:mt-4 w-36 text-xl mx-4 max-md:mx-1  text-green-700  hover:text-white rounded-md"
               >
                 ویرایش مخاطب
               </Button>
@@ -194,7 +195,7 @@ export default function EditContact() {
                 <Button
                   variant="contained"
                   color="error"
-                  className="mt-10 -mb-7 max-md:mt-4 w-24 text-xl mx-4 text-red-700  hover:text-white rounded-md"
+                  className="mt-10 -mb-7 max-md:mt-4 w-24 text-xl mx-4 max-md:mx-2 text-red-700  hover:text-white rounded-md"
                 >
                   انصراف
                 </Button>

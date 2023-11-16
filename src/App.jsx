@@ -103,7 +103,7 @@ function App() {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <Typography
+          <div
             dir="rtl"
             style={{
               backgroundColor: "#282a36",
@@ -153,7 +153,7 @@ function App() {
             >
               انصراف
             </Button>
-          </Typography>
+          </div>
         );
       },
     });
