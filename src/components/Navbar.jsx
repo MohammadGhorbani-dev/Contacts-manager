@@ -7,7 +7,7 @@ import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 export default function Navbar() {
   return (
-    <AppBar position="static" className="bg-[#282a36]">
+    <AppBar className="bg-[#282a36] fixed z-50">
       <Toolbar className="text-white">
         <div className=" absolute flex items-center gap-x-2">
           <PermContactCalendarIcon />
@@ -18,7 +18,7 @@ export default function Navbar() {
             className="max-md:hidden"
           >
             وب اپلیکیشن مدیریت{" "}
-            <span className={`text-[#bd93f9] `}>مخاطبین</span>
+            <span className="text-[#bd93f9]" >مخاطبین</span>
           </Typography>
         </div>
         <div className="m-auto relative">

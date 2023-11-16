@@ -31,7 +31,7 @@ export default function AddContact({
           <div className="flex">
             <form
               onSubmit={createContactForm}
-              className="flex flex-col gap-4 mx-9"
+              className="flex flex-col gap-4 mx-9 max-lg:full w-96"
             >
               <TextField
                 required
@@ -97,25 +97,24 @@ export default function AddContact({
               <div className="m-auto">
                 <Button
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   color="success"
-                  className="mx-2 text-base font-bold rounded-lg"
+                  className="mx-2 text-base font-bold rounded-lg text-green-700 hover:text-white"
                 >
                   ساخت مخاطب
                 </Button>
                 <Link to={"/contacts"}>
                   <Button
-                    variant="outlined"
-                    color="error"
-                    className="mx-2  text-base font-bold rounded-lg"
+                     variant="contained"
+                     color="error"
+                    className="mx-2  text-base font-bold rounded-lg text-red-700 hover:text-white"
                   >
                     انصراف
                   </Button>
                 </Link>
               </div>
             </form>
-
-            <img src={IMAGE} alt="IMAGE" className="w-3/6 h-fit  m-auto" />
+            <img src={IMAGE} alt="IMAGE" className="w-3/6 h-fit  m-auto max-md:hidden" />
           </div>
         </section>
       )}

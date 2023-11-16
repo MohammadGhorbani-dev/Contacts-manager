@@ -38,18 +38,22 @@ export default function Contact({ contact }) {
         </Typography>
       </CardContent>
       <CardOverflow sx={{ bgcolor: "background.level1" }}>
-        <CardActions className="m-auto gap-9 ">
-          <Link to={`/contacts/${contact.id}`}>
+        <CardActions className="m-auto gap-9">
+          <Link to={`/contacts/${contact.id}`} title="اطلاعات مخاطب">
             <IconButton>
               <VisibilityIcon color="primary" className="w-8 h-8" />
             </IconButton>
           </Link>
-          <IconButton color="secondary">
-            <EditIcon className="w-8 h-8" />
-          </IconButton>
-          <IconButton color="error">
-            <DeleteIcon className="w-8 h-8" />
-          </IconButton>{" "}
+          <Link to={`/contacts/edit/${contact.id}`} title="ویرایش مخاطب">
+            <IconButton color="warning">
+              <EditIcon className="w-8 h-8" />
+            </IconButton>
+          </Link>
+          <Link title="اطلاعات مخاطب">
+            <IconButton color="error">
+              <DeleteIcon className="w-8 h-8" />
+            </IconButton>
+          </Link>
         </CardActions>
       </CardOverflow>
     </Card>

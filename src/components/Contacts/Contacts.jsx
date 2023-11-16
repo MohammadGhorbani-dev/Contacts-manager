@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 export default function Contacts({ contacts, spinnerLoading }) {
   return (
     <>
-      <section>
-        <Link to={"/contacts/add"}>
+      <section >
+        <Link to={"/contacts/add"} >
           <Fab
             variant="extended"
             size="medium"

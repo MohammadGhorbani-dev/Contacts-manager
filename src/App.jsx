@@ -97,7 +97,8 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Routes>
+   <div className="pt-16">
+   <Routes>
         <Route path="/" element={<Navigate to="/contacts" />} />
         <Route
           path="/contacts"
@@ -117,9 +118,11 @@ function App() {
             />
           }
         />
+        <Route path="/contacts/edit/:contactId" element={<EditContact />} />
         <Route path="/contacts/:contactId" element={<ViewContact />} />
         <Route path="/contacts/edit/:contactId" element={<Contact />} />
       </Routes>
+   </div>
     </div>
   );
 }

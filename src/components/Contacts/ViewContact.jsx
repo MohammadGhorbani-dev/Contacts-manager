@@ -43,46 +43,50 @@ export default function ViewContact() {
 
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
+      {Object.keys(contact).length > 0 && (
         <>
           <h3 className="text-center mt-5 text-xl font-bold ">اطلاعات مخاطب</h3>
           <div className="border-[1px] mx-9 my-5" />
-          <Card
-            sx={{
-              width: 320,
-              maxWidth: "100%",
-            }}
-            className="overflow-hidden rounded-xl shadow-2xl w-11/12 p-11 m-auto"
-          >
-            <CardContent className="flex flex-row">
-              <div>
-                <img
-                  src={contact.photo}
-                  alt={contact.fullname}
-                  className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9]"
-                />
-              </div>
-              <div className="flex flex-col gap-5 justify-between py-1 px-10">
-                <Typography>
-                  نام و نام خانوادگی : {contact.fullname}
-                </Typography>
-                <Typography>شماره موبایل : {contact.mobile}</Typography>
-                <Typography>ایمیل : {contact.email}</Typography>
-                <Typography>گروه : {group.name}</Typography>
-              </div>
-            </CardContent>
-            <Link to={"/contacts"} className="flex justify-center">
-              <Button
-                variant="contained"
-                color="secondary"
-                className="mt-10 -mb-7 w-24 text-xl  text-purple-800  hover:text-white rounded-md"
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Card
+                sx={{
+                  width: 320,
+                  maxWidth: "100%",
+                }}
+                className="overflow-hidden rounded-xl shadow-2xl w-11/12 p-11 m-auto"
               >
-                بازگشت
-              </Button>
-            </Link>
-          </Card>
+                <CardContent className="flex flex-row max-md:flex-col ">
+                  <div>
+                    <img
+                      src={contact.photo}
+                      alt={contact.fullname}
+                      className="w-64 h-64 rounded-lg  border-[2px] border-[#bd93f9] max-md:mr-10"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-5 justify-between py-1 px-10">
+                    <Typography>
+                      نام و نام خانوادگی : {contact.fullname}
+                    </Typography>
+                    <Typography>شماره موبایل : {contact.mobile}</Typography>
+                    <Typography>ایمیل : {contact.email}</Typography>
+                    <Typography>گروه : {group.name}</Typography>
+                  </div>
+                </CardContent>
+                <Link to={"/contacts"} className="flex justify-center">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className="mt-10 -mb-7 w-24 text-xl  text-purple-800  hover:text-white rounded-md"
+                  >
+                    بازگشت
+                  </Button>
+                </Link>
+              </Card>
+            </>
+          )}
         </>
       )}
     </>
