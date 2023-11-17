@@ -22,6 +22,7 @@ import { Button } from "@mui/material";
 function App() {
   const [spinnerLoading, setSpinnerLoading] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [search, setSearch] = useState("");
   const [getContacts, setContacts] = useState([]);
   const [getGroups, setGroups] = useState([]);
   const [getContact, setContact] = useState({
@@ -32,7 +33,6 @@ function App() {
     job: "",
     group: "",
   });
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -172,17 +172,23 @@ function App() {
     }
   };
 
+  const filteredContacts = getContacts.filter(
+    (contact) =>
+      contact.fullname.toLowerCase().includes(search.toLowerCase()) ||
+      contact.mobile.includes(search)
+  );
+
   return (
-    <div>
-      <Navbar />
-      <div className="pt-16">
+    <>
+      <Navbar setSearch={setSearch} />
+      <div className="pt-16 pb-10">
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
           <Route
             path="/contacts"
             element={
               <Contacts
-                contacts={getContacts}
+                filteredContacts={filteredContacts}
                 spinnerLoading={spinnerLoading}
                 confirmContact={confirm}
               />
@@ -208,7 +214,7 @@ function App() {
           <Route path="/contacts/edit/:contactId" element={<Contact />} />
         </Routes>
       </div>
-    </div>
+    </>
   );
 }
 

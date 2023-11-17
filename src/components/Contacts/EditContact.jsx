@@ -19,7 +19,7 @@ import {
   updateContact,
 } from "../../services/contactService";
 
-export default function EditContact() {
+export default function EditContact({ update, setUpdate }) {
   const { contactId } = useParams();
   const navigate = useNavigate();
 
@@ -73,6 +73,7 @@ export default function EditContact() {
       const { data } = await updateContact(state.contact, contactId);
       setState({ ...state, loading: false });
       if (data) {
+        setUpdate(!update);
         navigate("/contacts");
       }
     } catch (err) {

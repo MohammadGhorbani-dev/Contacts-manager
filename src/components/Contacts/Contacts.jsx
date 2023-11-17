@@ -6,7 +6,11 @@ import NotFound from "../../assets/no-found.gif";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 
-export default function Contacts({ contacts, spinnerLoading, confirmContact }) {
+export default function Contacts({
+  spinnerLoading,
+  confirmContact,
+  filteredContacts,
+}) {
   return (
     <>
       <section>
@@ -25,8 +29,8 @@ export default function Contacts({ contacts, spinnerLoading, confirmContact }) {
         <Spinner />
       ) : (
         <section className="flex flex-wrap justify-center w-full h-full">
-          {contacts.length > 0 ? (
-            contacts.map((c) => (
+          {filteredContacts?.length !== 0 ? (
+            filteredContacts?.map((c) => (
               <Contact
                 confirmContact={() => confirmContact(c.id, c.fullname)}
                 contact={c}
@@ -36,7 +40,7 @@ export default function Contacts({ contacts, spinnerLoading, confirmContact }) {
           ) : (
             <div>
               <p
-                className={` text-[${myColors.ORANGE}] text-center text-lg py-5 font-bold`}
+                className={` text-[${myColors.ORANGE}] text-center text-xl py-10 font-bold`}
               >
                 مخاطب یافت نشد...
               </p>

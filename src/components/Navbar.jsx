@@ -5,7 +5,7 @@ import SearchContact from "./Contacts/SearchContact";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 // import { PURPLE, BACKGROUND } from "../helpers/colors";
 
-export default function Navbar() {
+export default function Navbar({ setSearch }) {
   return (
     <AppBar className="bg-[#282a36] fixed z-20">
       <Toolbar className="text-white">
@@ -17,12 +17,11 @@ export default function Navbar() {
             component="div"
             className="max-md:hidden"
           >
-            وب اپلیکیشن مدیریت{" "}
-            <span className="text-[#bd93f9]" >مخاطبین</span>
+            وب اپلیکیشن مدیریت <span className="text-[#bd93f9]">مخاطبین</span>
           </Typography>
         </div>
         <div className="m-auto relative w-1/4 max-md:w-2/3">
-          <SearchContact />
+          <SearchContact setSearch={setSearch} />
         </div>
       </Toolbar>
     </AppBar>
