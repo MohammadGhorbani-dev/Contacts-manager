@@ -4,7 +4,6 @@
 /* try tailwinds class first */
 /* اگر راه حلی نیافتید از کلاس و سی اس اس استفاده نمایید. */
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,8 +16,10 @@ html {
 
 body {
   height: 100%;
-  /* background: url(https://colorlib.com/etc/lf/Login_v4/images/bg-01.jpg); */
+  background: url(./assets/back-ground.jpg);
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #root {

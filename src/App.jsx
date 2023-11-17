@@ -18,7 +18,6 @@ import {
 } from "./components";
 
 import { Button } from "@mui/material";
-import Typography from "@mui/joy/Typography";
 
 function App() {
   const [spinnerLoading, setSpinnerLoading] = useState(false);
