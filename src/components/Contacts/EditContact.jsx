@@ -11,20 +11,21 @@ import {
 
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../Spinner";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   getContact,
   getAllGroups,
   updateContact,
 } from "../../services/contactService";
+import { ContactContext } from "../../context/contactContext";
 
 export default function EditContact({ update, setUpdate }) {
   const { contactId } = useParams();
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    loading: false,
+    // loading: false,
     contact: {
       fullname: "",
       photo: "",
@@ -35,22 +36,24 @@ export default function EditContact({ update, setUpdate }) {
     },
     groups: [],
   });
+  const { loading, setLoading, setContacts, contacts } =
+    useContext(ContactContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setState({ ...state, loading: true });
+        setLoading(true);
         const { data: contactData } = await getContact(contactId);
         const { data: groupsData } = await getAllGroups();
+        setLoading(false);
         setState({
           ...state,
-          loading: false,
           contact: contactData,
           groups: groupsData,
         });
       } catch (err) {
         console.log(err.message);
-        setState({ ...state, loading: false });
+        setLoading(false);
       }
     };
     fetchData();
@@ -69,20 +72,25 @@ export default function EditContact({ update, setUpdate }) {
   const submitForm = async (event) => {
     event.preventDefault();
     try {
-      setState({ ...state, loading: true });
-      const { data } = await updateContact(state.contact, contactId);
-      setState({ ...state, loading: false });
-      if (data) {
-        setUpdate(!update);
+      setLoading(true);
+      const { data, status } = await updateContact(state.contact, contactId);
+      if (data && status === 200) {
+        setLoading(false);
+        const allContacts = [...contacts];
+        const contactIndex = allContacts.findIndex(
+          (c) => c.id === parseInt(contactId)
+        );
+        allContacts[contactIndex] = { ...data };
+        setContacts(allContacts);
         navigate("/contacts");
       }
     } catch (err) {
       console.log(err.message);
-      setState({ ...state, loading: false });
+      setLoading(false);
     }
   };
 
-  const { loading, contact, groups } = state;
+  const { contact, groups } = state;
   return (
     <>
       <h3 className="text-center mt-5 text-xl font-bold max-md:mt-2">
@@ -183,24 +191,28 @@ export default function EditContact({ update, setUpdate }) {
                 </FormControl>
               </div>
             </CardContent>
-            <div className="flex justify-center">
+            <div  className="flex justify-center mt-12 -mb-6 max-md:mt-6">
               <Button
                 type="submit"
                 variant="contained"
                 color="success"
-                className="mt-10 -mb-7 max-md:mt-4 w-36 text-xl mx-4 max-md:mx-1  text-green-700  hover:text-white rounded-md"
+                size="small"
+                className="  w-36 text-xl mx-4 max-md:mx-1  text-green-700  hover:text-white rounded-md"
               >
                 ویرایش مخاطب
               </Button>
-              <Link to={"/contacts"}>
-                <Button
-                  variant="contained"
-                  color="error"
-                  className="mt-10 -mb-7 max-md:mt-4 w-24 text-xl mx-4 max-md:mx-2 text-red-700  hover:text-white rounded-md"
-                >
-                  انصراف
-                </Button>
-              </Link>
+              <div >
+                <Link to={"/contacts"}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="small"
+                    className="  w-24 text-xl mx-4 max-md:mx-2 text-red-700  hover:text-white rounded-md"
+                  >
+                    انصراف
+                  </Button>
+                </Link>
+              </div>
             </div>
           </Card>
         </form>

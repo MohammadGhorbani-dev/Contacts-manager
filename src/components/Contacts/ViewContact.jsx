@@ -6,40 +6,42 @@ import { Button } from "@mui/material";
 import Spinner from "../Spinner";
 import { getContact, getGroup } from "../../services/contactService";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ContactContext } from "../../context/contactContext";
 
 export default function ViewContact() {
   const { contactId } = useParams();
 
   const [state, setState] = useState({
-    loading: false,
     contact: {},
     group: {},
   });
 
+  const { loading, setLoading } = useContext(ContactContext);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setState({ ...state, loading: true });
+        setLoading(true);
         const { data: contactData } = await getContact(contactId);
         const { data: groupData } = await getGroup(contactData.group);
+        setLoading(false);
         setState({
           ...state,
-          loading: false,
           contact: contactData,
           group: groupData,
         });
       } catch (err) {
         console.log(err.message);
-        setState({ ...state, loading: false });
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  const { loading, contact, group } = state;
+  const { contact, group } = state;
 
   return (
     <>
@@ -72,18 +74,21 @@ export default function ViewContact() {
                     </Typography>
                     <Typography>شماره موبایل : {contact.mobile}</Typography>
                     <Typography>ایمیل : {contact.email}</Typography>
+                    <Typography>شغل : {contact.job}</Typography>
                     <Typography>گروه : {group.name}</Typography>
                   </div>
                 </CardContent>
-                <Link to={"/contacts"} className="flex justify-center">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className="mt-10 -mb-7 w-24 text-xl  text-purple-800  hover:text-white rounded-md"
-                  >
-                    بازگشت
-                  </Button>
-                </Link>
+                <div className="flex justify-center">
+                  <Link to={"/contacts"}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className=" -mb-7 w-32 text-xl  text-purple-800  hover:text-white rounded-md"
+                    >
+                      بازگشت
+                    </Button>
+                  </Link>
+                </div>
               </Card>
             </>
           )}

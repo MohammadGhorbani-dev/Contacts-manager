@@ -5,12 +5,12 @@ import Contact from "./Contact";
 import NotFound from "../../assets/no-found.gif";
 import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ContactContext } from "../../context/contactContext";
 
-export default function Contacts({
-  spinnerLoading,
-  confirmContact,
-  filteredContacts,
-}) {
+export default function Contacts() {
+  const { loading, deleteContact, filteredContacts } =
+    useContext(ContactContext);
   return (
     <>
       <section>
@@ -25,14 +25,14 @@ export default function Contacts({
           </Fab>
         </Link>
       </section>
-      {spinnerLoading ? (
+      {loading ? (
         <Spinner />
       ) : (
         <section className="flex flex-wrap justify-center w-full h-full">
           {filteredContacts?.length !== 0 ? (
             filteredContacts?.map((c) => (
               <Contact
-                confirmContact={() => confirmContact(c.id, c.fullname)}
+                deleteContact={() => deleteContact(c.id, c.fullname)}
                 contact={c}
                 key={c.id}
               />

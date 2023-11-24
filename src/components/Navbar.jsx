@@ -3,9 +3,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import SearchContact from "./Contacts/SearchContact";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import { useLocation } from "react-router-dom";
 // import { PURPLE, BACKGROUND } from "../helpers/colors";
 
-export default function Navbar({ setSearch }) {
+export default function Navbar() {
+  const location = useLocation();
   return (
     <AppBar className="bg-[#282a36] fixed z-20">
       <Toolbar className="text-white">
@@ -20,9 +22,11 @@ export default function Navbar({ setSearch }) {
             وب اپلیکیشن مدیریت <span className="text-[#bd93f9]">مخاطبین</span>
           </Typography>
         </div>
-        <div className="m-auto relative w-1/4 max-md:w-2/3">
-          <SearchContact setSearch={setSearch} />
-        </div>
+        {location.pathname === "/contacts" ? (
+          <div className="m-auto relative w-1/4 max-md:w-2/3">
+            <SearchContact />
+          </div>
+        ) : null}
       </Toolbar>
     </AppBar>
   );

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 
+import { ContactContext } from "./context/contactContext";
+
 import {
   getAllContacts,
   getAllGroups,
@@ -20,25 +22,17 @@ import {
 import { Button } from "@mui/material";
 
 function App() {
-  const [spinnerLoading, setSpinnerLoading] = useState(false);
-  const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [getContacts, setContacts] = useState([]);
-  const [getGroups, setGroups] = useState([]);
-  const [getContact, setContact] = useState({
-    fullname: "",
-    photo: "",
-    mobile: "",
-    email: "",
-    job: "",
-    group: "",
-  });
+  const [contacts, setContacts] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [contact, setContact] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setSpinnerLoading(true);
+        setLoading(true);
 
         const { data: contactsData } = await getAllContacts();
         const { data: groupsData } = await getAllGroups();
@@ -46,59 +40,39 @@ function App() {
         setContacts(contactsData);
         setGroups(groupsData);
 
-        setSpinnerLoading(false);
+        setLoading(false);
       } catch (err) {
         console.log(err.message);
-        setSpinnerLoading(false);
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setSpinnerLoading(true);
-
-        const { data: contactsData } = await getAllContacts();
-        setContacts(contactsData);
-
-        setSpinnerLoading(false);
-      } catch (err) {
-        console.log(err.message);
-        setSpinnerLoading(false);
-      }
-    };
-    fetchData();
-  }, [update]);
-
   const createContactForm = async (event) => {
     event.preventDefault();
-    console.log("object");
     try {
-      const { status } = await createContact(getContact);
+      setLoading((prevLoading) => !prevLoading);
+      const { status, data } = await createContact(contact);
       if (status === 201) {
-        setContact({
-          fullname: "",
-          photo: "",
-          mobile: "",
-          email: "",
-          job: "",
-          group: "",
-        });
-        setUpdate(!update);
+        const allContacts = [...contacts, data];
+        setContacts(allContacts);
+
+        setContact({});
+        setLoading((prevLoading) => !prevLoading);
         navigate("/contacts");
       }
     } catch (err) {
       console.log(err.message);
+      setLoading((prevLoading) => !prevLoading);
     }
   };
 
-  const setContactInfo = (event) => {
-    setContact({ ...getContact, [event.target.name]: event.target.value });
+  const onContactChange = (event) => {
+    setContact({ ...contact, [event.target.name]: event.target.value });
   };
 
-  const confirm = (contactId, contactFullname) => {
+  const confirmDelete = (contactId, contactFullname) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -160,61 +134,55 @@ function App() {
 
   const removeContact = async (contactId) => {
     try {
-      setSpinnerLoading(true);
-      const response = await deleteContact(contactId);
-      if (response) {
-        setSpinnerLoading(false);
-        setUpdate(!update);
+      setLoading(true);
+      const { status } = await deleteContact(contactId);
+      if (status === 200) {
+        setLoading(false);
+        const allContacts = contacts.filter((e) => e.id !== contactId);
+        setContacts(allContacts);
       }
     } catch (err) {
       console.log(err.message);
-      setSpinnerLoading(false);
+      setLoading(false);
     }
   };
 
-  const filteredContacts = getContacts.filter(
+  const filteredContacts = contacts?.filter(
     (contact) =>
-      contact.fullname.toLowerCase().includes(search.toLowerCase()) ||
-      contact.mobile.includes(search)
+      contact.fullname?.toLowerCase().includes(search.toLowerCase()) ||
+      contact.mobile?.includes(search)
   );
 
   return (
-    <>
-      <Navbar setSearch={setSearch} />
+    <ContactContext.Provider
+      value={{
+        loading,
+        setLoading,
+        contact,
+        setContact,
+        contacts,
+        setContacts,
+        filteredContacts,
+        groups,
+        onContactChange,
+        search,
+        contactSearch: setSearch,
+        deleteContact: confirmDelete,
+        createContact: createContactForm,
+      }}
+    >
+      <Navbar />
       <div className="pt-16 pb-10">
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
-          <Route
-            path="/contacts"
-            element={
-              <Contacts
-                filteredContacts={filteredContacts}
-                spinnerLoading={spinnerLoading}
-                confirmContact={confirm}
-              />
-            }
-          />
-          <Route
-            path="/contacts/add"
-            element={
-              <AddContact
-                spinnerLoading={spinnerLoading}
-                setContactInfo={setContactInfo}
-                contact={getContact}
-                groups={getGroups}
-                createContactForm={createContactForm}
-              />
-            }
-          />
-          <Route
-            path="/contacts/edit/:contactId"
-            element={<EditContact update={update} setUpdate={setUpdate} />}
-          />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contacts/add" element={<AddContact />} />
+          <Route path="/contacts/edit/:contactId" element={<EditContact />} />
           <Route path="/contacts/:contactId" element={<ViewContact />} />
           <Route path="/contacts/edit/:contactId" element={<Contact />} />
         </Routes>
       </div>
-    </>
+    </ContactContext.Provider>
   );
 }
 

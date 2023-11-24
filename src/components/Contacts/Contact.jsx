@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 
-export default function Contact({ contact, confirmContact }) {
+export default function Contact({ contact, deleteContact }) {
   return (
     <Card
       sx={{
@@ -49,7 +49,7 @@ export default function Contact({ contact, confirmContact }) {
               <EditIcon className="w-8 h-8" />
             </IconButton>
           </Link>
-          <IconButton color="error" onClick={confirmContact}>
+          <IconButton color="error" onClick={deleteContact}>
             <DeleteIcon className="w-8 h-8" />
           </IconButton>
         </CardActions>

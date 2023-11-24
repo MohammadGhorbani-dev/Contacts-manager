@@ -11,16 +11,15 @@ import {
   TextField,
 } from "@mui/material";
 
-export default function AddContact({
-  spinnerLoading,
-  setContactInfo,
-  contact,
-  groups,
-  createContactForm,
-}) {
+import { useContext } from "react";
+import { ContactContext } from "../../context/contactContext";
+
+export default function AddContact() {
+  const { loading, onContactChange, contact, groups, createContact } =
+    useContext(ContactContext);
   return (
     <>
-      {spinnerLoading ? (
+      {loading ? (
         <Spinner />
       ) : (
         <section className="">
@@ -30,13 +29,13 @@ export default function AddContact({
           <div className="border-[1px] mx-9 my-5" />
           <div className="flex">
             <form
-              onSubmit={createContactForm}
+              onSubmit={createContact}
               className="flex flex-col gap-4 mx-9 max-lg:full w-96"
             >
               <TextField
                 required
                 value={contact.fullname}
-                onChange={setContactInfo}
+                onChange={onContactChange}
                 name="fullname"
                 type="text"
                 label="نام و نام خانوادگی"
@@ -45,7 +44,7 @@ export default function AddContact({
               <TextField
                 required
                 value={contact.photo}
-                onChange={setContactInfo}
+                onChange={onContactChange}
                 name="photo"
                 type="text"
                 label="آدرس تصویر"
@@ -54,7 +53,7 @@ export default function AddContact({
               <TextField
                 required
                 value={contact.mobile}
-                onChange={setContactInfo}
+                onChange={onContactChange}
                 name="mobile"
                 type="tel"
                 label="شماره موبایل"
@@ -63,7 +62,7 @@ export default function AddContact({
               <TextField
                 required
                 value={contact.email}
-                onChange={setContactInfo}
+                onChange={onContactChange}
                 name="email"
                 type="text"
                 label="آدرس ایمیل"
@@ -72,7 +71,7 @@ export default function AddContact({
               <TextField
                 required
                 value={contact.job}
-                onChange={setContactInfo}
+                onChange={onContactChange}
                 name="job"
                 type="text"
                 label="شغل"
@@ -82,7 +81,7 @@ export default function AddContact({
                 <InputLabel>انتخاب گروه</InputLabel>
                 <Select
                   value={contact.group}
-                  onChange={setContactInfo}
+                  onChange={onContactChange}
                   label="انتخاب گروه"
                   name="group"
                 >
@@ -94,19 +93,21 @@ export default function AddContact({
                     ))}
                 </Select>
               </FormControl>
-              <div className="m-auto">
+              <div className="m-auto mt-10">
                 <Button
                   type="submit"
                   variant="contained"
                   color="success"
+                  size="large"
                   className="mx-2 text-base font-bold rounded-lg text-green-700 hover:text-white"
                 >
                   ساخت مخاطب
                 </Button>
                 <Link to={"/contacts"}>
                   <Button
-                     variant="contained"
-                     color="error"
+                    variant="contained"
+                    color="error"
+                    size="large"
                     className="mx-2  text-base font-bold rounded-lg text-red-700 hover:text-white"
                   >
                     انصراف
@@ -114,7 +115,11 @@ export default function AddContact({
                 </Link>
               </div>
             </form>
-            <img src={IMAGE} alt="IMAGE" className="w-3/6 h-fit  m-auto max-md:hidden" />
+            <img
+              src={IMAGE}
+              alt="IMAGE"
+              className="w-3/6 h-fit  m-auto max-md:hidden"
+            />
           </div>
         </section>
       )}
