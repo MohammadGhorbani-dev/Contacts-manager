@@ -9,8 +9,14 @@ import { useContext } from "react";
 import { ContactContext } from "../../context/contactContext";
 
 export default function Contacts() {
-  const { loading, deleteContact, filteredContacts } =
-    useContext(ContactContext);
+  const {
+    loading,
+    deleteContact,
+    filteredContacts,
+    contacts,
+    setContacts,
+    setLoading,
+  } = useContext(ContactContext);
   return (
     <>
       <section>
@@ -32,7 +38,15 @@ export default function Contacts() {
           {filteredContacts?.length !== 0 ? (
             filteredContacts?.map((c) => (
               <Contact
-                deleteContact={() => deleteContact(c.id, c.fullname)}
+                deleteContact={() =>
+                  deleteContact(
+                    c.id,
+                    c.fullname,
+                    contacts,
+                    setContacts,
+                    setLoading
+                  )
+                }
                 contact={c}
                 key={c.id}
               />

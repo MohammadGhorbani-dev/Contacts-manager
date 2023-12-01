@@ -23,7 +23,7 @@ import { ContactContext } from "../../context/contactContext";
 import { Formik } from "formik";
 import { contactSchema } from "../../validations/contactValidation";
 
-export default function EditContact({ update, setUpdate }) {
+export default function EditContact() {
   const { contactId } = useParams();
   const navigate = useNavigate();
 
@@ -62,15 +62,6 @@ export default function EditContact({ update, setUpdate }) {
     fetchData();
   }, []);
 
-  // const contactUpdate = (event) => {
-  //   setState({
-  //     ...state,
-  //     contact: {
-  //       ...state.contact,
-  //       [event.target.name]: event.target.value,
-  //     },
-  //   });
-  // };
   const submitForm = async (values) => {
     try {
       setLoading(true);
@@ -167,7 +158,7 @@ export default function EditContact({ update, setUpdate }) {
                       id="mobile"
                       {...formik.getFieldProps("mobile")}
                       name="mobile"
-                      type="number"
+                      type="tel"
                       label="شماره موبایل"
                       variant="outlined"
                       size="small"

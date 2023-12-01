@@ -6,6 +6,7 @@ export { default as ViewContact } from "./Contacts/ViewContact";
 export { default as Contacts } from "./Contacts/Contacts";
 export { default as Contact } from "./Contacts/Contact";
 export { default as SearchContact } from "./Contacts/SearchContact";
+export { default as ConfirmDelete } from "./Contacts/ConfirmDelete";
 
 /* Other Components */
 

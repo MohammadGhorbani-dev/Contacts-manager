@@ -77,7 +77,7 @@ export default function AddContact() {
                     id="mobile"
                     {...formik.getFieldProps("mobile")}
                     name="mobile"
-                    type="number"
+                    type="tel"
                     label="شماره موبایل"
                     variant="outlined"
                   />
