@@ -22,6 +22,7 @@ import { ContactContext } from "../../context/contactContext";
 
 import { Formik } from "formik";
 import { contactSchema } from "../../validations/contactValidation";
+import { toast } from "react-toastify";
 
 export default function EditContact() {
   const { contactId } = useParams();
@@ -67,6 +68,8 @@ export default function EditContact() {
       setLoading(true);
       const { data, status } = await updateContact(values, contactId);
       if (data && status === 200) {
+        toast.info("مخاطب با موفقیت ویرایش شد");
+
         setLoading(false);
         const allContacts = [...contacts];
         const contactIndex = allContacts.findIndex(

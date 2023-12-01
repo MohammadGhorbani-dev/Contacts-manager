@@ -5,6 +5,7 @@ import App from "./App.jsx";
 
 import "./index.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { StyledEngineProvider } from "@mui/material";
 

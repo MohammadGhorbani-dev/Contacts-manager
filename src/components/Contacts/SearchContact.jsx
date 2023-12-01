@@ -1,5 +1,4 @@
 import SearchIcon from "@mui/icons-material/Search";
-// import { COMMENT } from "../../helpers/colors";
 import { useContext } from "react";
 import { ContactContext } from "../../context/contactContext.js";
 

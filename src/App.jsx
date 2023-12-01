@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import { ContactContext } from "./context/contactContext";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   getAllContacts,
@@ -52,6 +53,7 @@ function App() {
       setLoading((prevLoading) => !prevLoading);
       const { status, data } = await createContact(values);
       if (status === 201) {
+        toast.success("مخاطب با موفقیت ایجاد شد");
         const allContacts = [...contacts, data];
         setContacts(allContacts);
         setLoading((prevLoading) => !prevLoading);
@@ -85,6 +87,7 @@ function App() {
         createContact: createContactForm,
       }}
     >
+      <ToastContainer rtl={true} theme="colored" pauseOnHover={false} />
       <Navbar />
       <div className="pt-16 pb-10">
         <Routes>

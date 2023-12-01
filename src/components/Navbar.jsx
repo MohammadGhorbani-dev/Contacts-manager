@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import SearchContact from "./Contacts/SearchContact";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import { useLocation } from "react-router-dom";
-// import { PURPLE, BACKGROUND } from "../helpers/colors";
 
 export default function Navbar() {
   const location = useLocation();

@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import { deleteContact } from "../../services/contactService";
 import { confirmAlert } from "react-confirm-alert";
+import { toast } from "react-toastify";
 
 const ConfirmDelete = (
   contactId,
@@ -73,6 +74,7 @@ const removeContact = async (contactId, contacts, setContacts, setLoading) => {
     setLoading(true);
     const { status } = await deleteContact(contactId);
     if (status === 200) {
+      toast.error("مخاطب با موفقیت حذف شد");
       setLoading(false);
       const allContacts = contacts.filter((e) => e.id !== contactId);
       setContacts(allContacts);
