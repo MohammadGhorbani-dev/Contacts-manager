@@ -1,8 +1,4 @@
-@import url("https://v1.fontapi.ir/css/Estedad");
-
-/* DONT ADD CSS HERE */
-/* try tailwinds class first */
-/* اگر راه حلی نیافتید از کلاس و سی اس اس استفاده نمایید. */
+/* @import url("https://v1.fontapi.ir/css/Estedad"); */
 
 @tailwind base;
 @tailwind components;
