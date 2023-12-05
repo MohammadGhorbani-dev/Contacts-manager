@@ -1,4 +1,3 @@
-import myColors from "../../helpers/colors";
 import Fab from "@mui/material/Fab";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Contact from "./Contact";
@@ -24,7 +23,7 @@ export default function Contacts() {
           <Fab
             variant="extended"
             size="medium"
-            className={`bg-[${myColors.COMMENT}] text-white text-base gap-1 fixed bottom-5 right-5 z-10`}
+            className="bg-[#6272a4] text-white text-base gap-1 fixed bottom-5 right-5 z-10"
           >
             افزودن مخاطب جدید
             <AddCircleIcon />
@@ -53,9 +52,7 @@ export default function Contacts() {
             ))
           ) : (
             <div>
-              <p
-                className={` text-[${myColors.ORANGE}] text-center text-xl py-10 font-bold`}
-              >
+              <p className=" text-[#ffb86c] text-center text-xl py-10 font-bold">
                 مخاطب یافت نشد...
               </p>
               <img src={NotFound} className="w-96 m-auto" alt="یافت نشد" />
