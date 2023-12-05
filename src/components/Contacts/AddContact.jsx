@@ -58,7 +58,7 @@ export default function AddContact() {
                     variant="outlined"
                   />
                   {formik.touched.fullname && formik.errors.fullname ? (
-                    <span className="text-red-600">
+                    <span className="text-red-500">
                       {formik.errors.fullname}
                     </span>
                   ) : null}
@@ -71,7 +71,7 @@ export default function AddContact() {
                     variant="outlined"
                   />
                   {formik.touched.photo && formik.errors.photo ? (
-                    <span className="text-red-600">{formik.errors.photo}</span>
+                    <span className="text-red-500">{formik.errors.photo}</span>
                   ) : null}
                   <TextField
                     id="mobile"
@@ -82,7 +82,7 @@ export default function AddContact() {
                     variant="outlined"
                   />
                   {formik.touched.mobile && formik.errors.mobile ? (
-                    <span className="text-red-600">{formik.errors.mobile}</span>
+                    <span className="text-red-500">{formik.errors.mobile}</span>
                   ) : null}
                   <TextField
                     id="email"
@@ -93,7 +93,7 @@ export default function AddContact() {
                     variant="outlined"
                   />
                   {formik.touched.email && formik.errors.email ? (
-                    <span className="text-red-600">{formik.errors.email}</span>
+                    <span className="text-red-500">{formik.errors.email}</span>
                   ) : null}
                   <TextField
                     id="job"
@@ -119,7 +119,7 @@ export default function AddContact() {
                         ))}
                     </Select>
                     {formik.touched.group && formik.errors.group ? (
-                      <span className="text-red-600">
+                      <span className="text-red-500">
                         {formik.errors.group}
                       </span>
                     ) : null}

@@ -68,7 +68,7 @@ function App() {
 
   const filteredContacts = contacts?.filter(
     (contact) =>
-      contact.fullname?.toLowerCase().includes(search.toLowerCase()) ||
+      contact.fullname?.toLowerCase().includes(search.toLowerCase().trim()) ||
       contact.mobile?.includes(search)
   );
   return (
